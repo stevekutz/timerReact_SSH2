@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 
-import Timer from './comp/TimerC';
+import Timer from './comp/Timer';
 
 function App() {
   return (
