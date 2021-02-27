@@ -7,6 +7,8 @@ import React, {Component} from 'react';
 
 class Timer extends Component {
     
+
+    // ******************  Define State  ******************
     // Legacy way using a constructor
 
     // constructor(props) {
@@ -16,6 +18,7 @@ class Timer extends Component {
     //         secondsCount: 0,
     //         timeCounter: new Date(),
     //         showTime: false,
+    //         timerActive: 'false',
     //         buttonText: 'Start' 
     //     }
     
@@ -29,6 +32,70 @@ class Timer extends Component {
         timerActive: 'false',
         buttonText: 'Start',
     }
+    // ****************************************************
+
+
+
+    // **************   LifeCycle Hooks  ********************************
+    // Deprecated Life Cycle Methods:
+        // componentWillMount → UNSAFE_componentWillMount
+        // componentWillReceiveProps → UNSAFE_componentWillReceiveProps
+        // componentWillUpdate → UNSAFE_componentWillUpdate
+
+    componentDidMount() {
+        // called AFTER all child elements & components are mounted (Mounting phase) in the DOM
+        // use for initializing a DOM node(e.g. network requests, suscriptions, ...) 
+        // use for measuring a DOM node size/position (e.g before setting up a modal, images, ...)
+        //     a bit similar to how useEffect is used with Hooks
+        console.log("CDM fired")
+        
+        // setup for Date with seconds counter
+        setInterval(() => {
+            this.setState({timeCounter: new Date()});
+        }, 1000)
+        
+        // setup for start/stop timer
+        let intervalID = setInterval(this.countSeconds, 1000);
+        this.setState({intervalID: intervalID});
+        this.setState({timerActive: false });
+        
+        console.log("timerActive", this.state.timerActive);
+
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+    // componentDidUpdate(prevProps, prevState, snapshot)
+        // called AFTER a component updates 
+        // NOTE: All network requests must be inside a conditional statement to avoid infinite loops
+            // prevProps: Previous props passed to the component
+            // prevState: Previous state of the component
+            // snapshot: Value returned by getSnapshotBeforeUpdate() method
+
+
+        // let count = this.state.secondsCount;
+        let count = prevState.secondsCount;
+        let countMSG = "";
+
+        if (count % 2 === 0) {
+            // this.setState({secondsMSG: 'even'})
+            countMSG = " even " + count.toString();
+            console.log(countMSG)
+
+        } else {
+            countMSG = " ODD " + count.toString();
+            console.log(countMSG)
+        }
+
+    }
+
+    componentWillUnmount() {
+    // called before a component is unmounted(and destroyed)
+    // Should be used for 'cleanup' (e.g. voiding, removing, ...) for anything created in componentDidMount
+    // Examples of things created in componentDidMount: timers, counters, network requests, subscriptions, ... 
+        clearInterval(this.state.intervalID);
+    }
+
+    // ******************************************************************
 
     findCurrentDate = () => {
         let recentDate = new Date().toDateString();
@@ -73,28 +140,6 @@ class Timer extends Component {
         this.countSeconds();    
     }
 
-    // Deprecated Life Cycle Methods
-
-    // componentWillMount → UNSAFE_componentWillMount
-    // componentWillReceiveProps → UNSAFE_componentWillReceiveProps
-    // componentWillUpdate → UNSAFE_componentWillUpdate
-
-
-
-
-    // called AFTER all child elements & components are mounted (Mounting phase) in the DOM
-    //     similar to how useEffect used with Hooks
-    componentDidMount() {
-        console.log("CDM fired")
-        this.setState({timerActive: false });
-        let intervalID = setInterval(this.countSeconds, 1000);
-        this.setState({intervalID: intervalID});
-        this.setState({timerActive: false });
-        // clearInterval(this.state.intervalID);
-        
-        console.log("timerActive", this.state.timerActive);
-
-    }
 
     countSeconds = () => {
 
@@ -110,47 +155,14 @@ class Timer extends Component {
         }
     }
 
-
-
-    // called AFTER a component updates 
-    // NOTE: All network requests must be inside a conditional statement to avoid infinite loops
-        // prevProps: Previous props passed to the component
-        // prevState: Previous state of the component
-        // snapshot: Value returned by getSnapshotBeforeUpdate() method
-
-    // componentDidUpdate(prevProps, prevState, snapshot)
-    componentDidUpdate(preProps, prevState) {
-
-        // let count = this.state.secondsCount;
-
-        let count = prevState.secondsCount;
-        let countMSG = "";
-
-        if (count % 2 === 0) {
-            // this.setState({secondsMSG: 'even'})
-            countMSG = " even " + count.toString();
-            console.log(countMSG)
-
-        } else {
-            countMSG = " ODD " + count.toString();
-            console.log(countMSG)
-        }
-
-    }
-
     resetTimer  = () => {
         this.setState({timerActive: false});
         this.setState({secondsCount: 0 });
     }
 
 
-    componentWillUnmount() {
-        clearInterval(this.state.intervalID);
-    }
 
-    // tick() {    
-    //     this.setState({ timeCounter: new Date() });  
-    //     }
+
 
     render() {
         let intType;  
@@ -185,7 +197,7 @@ class Timer extends Component {
 
 
                 <p>  Now date says: {this.state.currentDate} </p>
-                <button onClick = {this.findCurrentDate}> Click to get time {this.state.currentDate} </button>
+                <button onClick = {this.findCurrentDate}> Click to get date {this.state.currentDate} </button>
                 <button onClick = {this.clearDate}> Clear Date </button>
             </div>    
         )    

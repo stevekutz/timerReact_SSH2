@@ -8,6 +8,7 @@ function App() {
       <header className="App-header">
         <h1> Updated Class Comp NOW </h1>
         <Timer />
+        <Timer />
 
       </header>
     </div>
