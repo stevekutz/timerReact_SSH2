@@ -56,17 +56,21 @@ class Timer extends Component {
         this.setState({
                 timerActive: !this.state.timerActive,        
             })
-        console.log("timerActive now  ", this.state.timerActive)
-        this.countSeconds();    
+        
+        this.updateButtonStartStop();
+
     }
 
     updateButtonStartStop = () => {
         if (this.state.timerActive) {
             this.setState({buttonText: 'Stop'})
+            // this.countSeconds();
         } else {
             this.setState({buttonText: 'Start'})
+            
         }
-    
+        
+        this.countSeconds();    
     }
 
     // Deprecated Life Cycle Methods
@@ -80,29 +84,28 @@ class Timer extends Component {
 
     // called AFTER all child elements & components are mounted (Mounting phase) in the DOM
     //     similar to how useEffect used with Hooks
-    // componentDidMount() {
-    //     console.log("CDM fired")
-    //     console.log("timerActive", this.state.timerActive);
+    componentDidMount() {
+        console.log("CDM fired")
+        let intervalID = setInterval(this.countSeconds, 1000);
+        this.setState({intervalID: intervalID});
+        // clearInterval(this.state.intervalID);
+        
+        console.log("timerActive", this.state.timerActive);
 
-    // }
+    }
 
     countSeconds = () => {
+
         if(this.state.timerActive) {
 
-            this.timerID = setInterval(
-                () => {
-                    // this.tick();
-                    console.log("Inside")
-                    this.setState({ timeCounter: new Date() });
-                    this.setState({secondsCount: this.state.secondsCount + 1 })
-                }, 1000 );
-        } else {
-            console.log("DONT START");
+            let intervalID = setInterval(this.countSeconds, 1000);
+            this.setState({intervalID: intervalID});
+
+            this.setState({secondsCount: this.state.secondsCount + 1})    
+
         }
-    
-    
-    
     }
+
 
 
     // called AFTER a component updates 
@@ -129,12 +132,11 @@ class Timer extends Component {
             console.log(countMSG)
         }
 
-        // this.countSeconds();
     }
 
 
     componentWillUnmount() {
-        clearInterval(this.timerID);
+        clearInterval(this.state.intervalID);
     }
 
     // tick() {    
@@ -160,7 +162,7 @@ class Timer extends Component {
                     <p> Date with seconds counter : {this.state.timeCounter.toLocaleTimeString()}</p>
                 </div>  
                 <div>
-                    <button onClick = {this.toggleTimer}> Start </button>
+                    <button onClick = {this.toggleTimer}> {this.state.buttonText} </button>
                 
                 
                 </div>
