@@ -63,10 +63,10 @@ class Timer extends Component {
 
     updateButtonStartStop = () => {
         if (this.state.timerActive) {
-            this.setState({buttonText: 'Stop'})
+            this.setState({buttonText: 'Start'})
             // this.countSeconds();
         } else {
-            this.setState({buttonText: 'Start'})
+            this.setState({buttonText: 'Stop'})
             
         }
         
@@ -86,8 +86,10 @@ class Timer extends Component {
     //     similar to how useEffect used with Hooks
     componentDidMount() {
         console.log("CDM fired")
+        this.setState({timerActive: false });
         let intervalID = setInterval(this.countSeconds, 1000);
         this.setState({intervalID: intervalID});
+        this.setState({timerActive: false });
         // clearInterval(this.state.intervalID);
         
         console.log("timerActive", this.state.timerActive);
@@ -98,11 +100,13 @@ class Timer extends Component {
 
         if(this.state.timerActive) {
 
-            let intervalID = setInterval(this.countSeconds, 1000);
-            this.setState({intervalID: intervalID});
+            // let intervalID = setInterval(this.countSeconds, 1000);
+            // this.setState({intervalID: intervalID});
 
             this.setState({secondsCount: this.state.secondsCount + 1})    
 
+        } else {
+            this.setState({secondsCount: this.state.secondsCount });
         }
     }
 
@@ -134,6 +138,11 @@ class Timer extends Component {
 
     }
 
+    resetTimer  = () => {
+        this.setState({timerActive: false});
+        this.setState({secondsCount: 0 });
+    }
+
 
     componentWillUnmount() {
         clearInterval(this.state.intervalID);
@@ -163,13 +172,14 @@ class Timer extends Component {
                 </div>  
                 <div>
                     <button onClick = {this.toggleTimer}> {this.state.buttonText} </button>
-                
+                    <button onClick = {this.resetTimer } > Reset </button>
                 
                 </div>
 
 
                 <div>
                     <p> Seconds counter: {this.state.secondsCount} </p>
+                
                     {intType}
                 </div>
 
