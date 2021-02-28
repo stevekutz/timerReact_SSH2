@@ -46,6 +46,7 @@ class Timer extends Component {
         // called AFTER all child elements & components are mounted (Mounting phase) in the DOM
         // use for initializing a DOM node(e.g. network requests, suscriptions, ...) 
         // use for measuring a DOM node size/position (e.g before setting up a modal, images, ...)
+        //     'side-effects' are set up here
         //     a bit similar to how useEffect is used with Hooks
         console.log("CDM fired")
         
@@ -66,6 +67,7 @@ class Timer extends Component {
     componentDidUpdate(prevProps, prevState) {
     // componentDidUpdate(prevProps, prevState, snapshot)
         // called AFTER a component updates 
+        // 'side-effects' that are set up in CDM are managed here
         // NOTE: All network requests must be inside a conditional statement to avoid infinite loops
             // prevProps: Previous props passed to the component
             // prevState: Previous state of the component
