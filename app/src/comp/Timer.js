@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import TimerDisplay from './TimerDisplay'
 
 // Alternative way to declare class component
 // import React from 'react';
@@ -180,9 +181,18 @@ class Timer extends Component {
 
         return (
             <div>
+
+                <TimerDisplay 
+                    min_tens = "4"
+                    min_ones = "3"
+                    colon = ":"
+                    sec_tens = "5"
+                    sec_ones = "9"
+                />
+
                 <p>  Current Date: {new Date().toDateString()}</p>
                 <div>
-                    <p> Date with seconds counter : {this.state.timeCounter.toLocaleTimeString()}</p>
+                    <p style = {{border: "1px solid blue", width: "300px", margin: "0 auto"}}> Date with seconds counter : {this.state.timeCounter.toLocaleTimeString()}</p>
                 </div>  
                 <div>
                     <button onClick = {this.toggleTimer}> {this.state.buttonText} </button>

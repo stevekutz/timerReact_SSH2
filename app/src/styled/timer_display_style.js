@@ -35,7 +35,7 @@ const DisplayColonDiv = styled.div`
 
 const DisplayDigitText = styled.div`
     border: 1px solid yellow;
-    width: 25px;
+    width: 15px;
     color: lightgray;
     text-align: center;
     padding: 5px;
