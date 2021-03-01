@@ -3,11 +3,11 @@ import styled, {css} from 'styled-components';
 const DisplayContainerDiv = styled.div`
     
     border: 3px solid deeppink;
-    width: 200px;
+    width: 40%;
     color: red;
     padding:
     display: flex;
-    margin: 0 auto;
+    margin: 4px auto;
 
 
 
@@ -16,13 +16,14 @@ const DisplayContainerDiv = styled.div`
 const DisplayDigitContainerDiv = styled.div`
     border: 5px solid purple;
     
-    width: 170px;
+    width: 40%;
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
     align-content: center;
     padding: 10px;
+    margin: 4px auto;
 
 
 `
@@ -35,10 +36,11 @@ const DisplayColonDiv = styled.div`
 
 const DisplayDigitText = styled.div`
     border: 1px solid yellow;
-    width: 15px;
+    width: 12px;
     color: lightgray;
     text-align: center;
-    padding: 5px;
+    // padding: 1px;
+    //margin: 4px;
 
 `
 

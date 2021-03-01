@@ -1,5 +1,10 @@
 import React, {Component} from 'react';
 import TimerDisplay from './TimerDisplay'
+import {
+    Timer_div
+} from '../styled/timer_style';
+
+
 
 // Alternative way to declare class component
 // import React from 'react';
@@ -158,6 +163,12 @@ class Timer extends Component {
         }
     }
 
+    assignDigits(){
+        console.log("Assign Called");
+    
+    }
+
+
     resetTimer  = () => {
         this.setState({timerActive: false});
         this.setState({secondsCount: 0 });
@@ -180,7 +191,7 @@ class Timer extends Component {
 
 
         return (
-            <div>
+            <Timer_div>
 
                 <TimerDisplay 
                     min_tens = "4"
@@ -211,7 +222,7 @@ class Timer extends Component {
                 <p>  Now date says: {this.state.currentDate} </p>
                 <button onClick = {this.findCurrentDate}> Click to get date {this.state.currentDate} </button>
                 <button onClick = {this.clearDate}> Clear Date </button>
-            </div>    
+            </Timer_div>    
         )    
     }
 
