@@ -37,6 +37,13 @@ class Timer extends Component {
         showTime: false,
         timerActive: 'false',
         buttonText: 'Start',
+        sec_OnesDigit: '0',
+        sec_TensDigit: '0',
+        min_OnesDigit: '0',
+        min_TensDigit: '0',
+
+
+
     }
     // ****************************************************
 
@@ -56,6 +63,7 @@ class Timer extends Component {
         //     a bit similar to how useEffect is used with Hooks
         console.log("CDM fired")
         
+
         // setup for Date with seconds counter
         setInterval(() => {
             this.setState({timeCounter: new Date()});
@@ -85,13 +93,12 @@ class Timer extends Component {
         let countMSG = "";
 
         if (count % 2 === 0) {
-            // this.setState({secondsMSG: 'even'})
             countMSG = " even " + count.toString();
-            console.log(countMSG)
+            // console.log(countMSG)
 
         } else {
             countMSG = " ODD " + count.toString();
-            console.log(countMSG)
+            // console.log(countMSG)
         }
 
     }
@@ -100,6 +107,7 @@ class Timer extends Component {
     // called before a component is unmounted(and destroyed)
     // Should be used for 'cleanup' (e.g. voiding, removing, ...) for anything created in componentDidMount
     // Examples of things created in componentDidMount: timers, counters, network requests, subscriptions, ... 
+        console.log("componentWillUnmount called");
         clearInterval(this.state.intervalID);
     }
 
@@ -145,7 +153,7 @@ class Timer extends Component {
             
         }
         
-        this.countSeconds();    
+        // this.countSeconds();    
     }
 
 
@@ -157,25 +165,45 @@ class Timer extends Component {
             // this.setState({intervalID: intervalID});
 
             this.setState({secondsCount: this.state.secondsCount + 1})    
+            
+            this.assignDigits();
 
         } else {
             this.setState({secondsCount: this.state.secondsCount });
         }
+
     }
 
-    assignDigits(){
-        console.log("Assign Called");
-    
-    }
+    assignDigits() {
+        // console.log("Assign Called");
 
+        let secondsCount = this.state.secondsCount;
+
+
+
+        // assign sec_Ones
+        this.setState({sec_OnesDigit: secondsCount.toString().slice(-1)})
+
+        // assign_sec_Tens
+        if (secondsCount > 9 && secondsCount <= 59) {
+            this.setState({sec_TensDigit: secondsCount.toString().slice(-2,1)})
+        }
+
+    }
 
     resetTimer  = () => {
         this.setState({timerActive: false});
         this.setState({secondsCount: 0 });
+        this.resetDisplayTimer();
     }
 
-
-
+    resetDisplayTimer = () => {
+        this.setState({sec_OnesDigit: 0 });
+        this.setState({set_TensDigit: 0 });
+        this.setState({min_OnesDigit: 0 });
+        this.setState({min_TensDigit: 0 });
+    
+    }
 
 
     render() {
@@ -194,11 +222,11 @@ class Timer extends Component {
             <Timer_div>
 
                 <TimerDisplay 
-                    min_tens = "4"
-                    min_ones = "3"
+                    min_tens = {this.state.min_TensDigit.toString()}
+                    min_ones = {this.state.min_OnesDigit.toString()}
                     colon = ":"
-                    sec_tens = "5"
-                    sec_ones = "9"
+                    sec_tens = {this.state.sec_TensDigit.toString()}
+                    sec_ones = {this.state.sec_OnesDigit.toString()}
                 />
 
                 <p>  Current Date: {new Date().toDateString()}</p>
