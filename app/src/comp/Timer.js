@@ -295,6 +295,7 @@ class Timer extends Component {
                     colon = ":"
                     sec_tens = {this.state.secDigits.toString().slice(-2,1)}
                     sec_ones = {this.state.secDigits.toString().slice(-1)}
+                    incMin_handler = {this.incMin}
                 />
 
                 <p>  Current Date: {new Date().toDateString()}</p>
