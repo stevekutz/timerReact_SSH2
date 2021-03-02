@@ -43,6 +43,8 @@ class Timer extends Component {
         min_TensDigit: 0,
         fullTime: false,
 
+        secDigits: '00',
+        minDigits: '00',
 
     }
     // ****************************************************
@@ -70,7 +72,7 @@ class Timer extends Component {
         }, 1000)
         
         // setup for start/stop timer
-        let intervalID = setInterval(this.countSeconds, 1);
+        let intervalID = setInterval(this.countSeconds, 100);
         this.setState({intervalID: intervalID});
         this.setState({timerActive: false });
         
@@ -170,32 +172,45 @@ class Timer extends Component {
 
     assignDigits() {
 
-        let secondsCount = this.state.secondsCount;
+        let justSecDigits;
+        let justMinDigits;
 
-        // assign sec_Ones
-        this.setState({sec_OnesDigit: this.state.secondsCount.toString().slice(-1)})
 
-        // assign_sec_Tens
-        if(this.state.secondsCount % 10 === 0) {
 
-                if (this.state.sec_TensDigit >= 0 && this.state.sec_TensDigit < 5) {
-                    this.setState({ sec_TensDigit: this.state.sec_TensDigit + 1 })    
-                    // this.setState({sec_TensDigit: this.})
-                } else {
-                    this.setState({ sec_TensDigit: 0 })
+        if(this.state.secondsCount >= 0 && this.state.secondsCount <= 9) {
+            this.setState({secDigits: '0' + this.state.secondsCount.toString()});
+        
+        } else if (this.state.secondsCount > 9 && this.state.secondsCount <= 59) {
+            this.setState({secDigits: this.state.secondsCount});
+        };   
+
+
+        
+
+
+        // // assign sec_Ones
+        // this.setState({sec_OnesDigit: this.state.secondsCount.toString().slice(-1)})
+
+        // // assign_sec_Tens
+        // if(this.state.secondsCount % 10 === 0) {
+
+        //         if (this.state.sec_TensDigit >= 0 && this.state.sec_TensDigit < 5) {
+        //             this.setState({ sec_TensDigit: this.state.sec_TensDigit + 1 })    
+        //             // this.setState({sec_TensDigit: this.})
+        //         } else {
+        //             this.setState({ sec_TensDigit: 0 })
                     
-
-                    if(this.state.min_OnesDigit >= 0 && this.state.min_OnesDigit < 9) {    
-                        this.setState({ min_OnesDigit: this.state.min_OnesDigit + 1 })
-                    } else if (this.state.min_TensDigit < 5) {
-                        this.setState({ min_OnesDigit: 0})
-                        this.setState({ min_TensDigit: this.state.min_TensDigit + 1 })
-                    } else if (this.state.min_TensDigit >= 5) {
-                        console.log(" over an hour !!!!! ")
-                        this.setState({fullTime: true})
-                    }
-                } 
-        }
+        //             if(this.state.min_OnesDigit >= 0 && this.state.min_OnesDigit < 9) {    
+        //                 this.setState({ min_OnesDigit: this.state.min_OnesDigit + 1 })
+        //             } else if (this.state.min_TensDigit < 5) {
+        //                 this.setState({ min_OnesDigit: 0})
+        //                 this.setState({ min_TensDigit: this.state.min_TensDigit + 1 })
+        //             } else if (this.state.min_TensDigit >= 5) {
+        //                 console.log(" over an hour !!!!! ")
+        //                 this.setState({fullTime: true})
+        //             }
+        //         } 
+        // }
 
     }
 
@@ -233,8 +248,8 @@ class Timer extends Component {
                     min_tens = {this.state.min_TensDigit.toString()}
                     min_ones = {this.state.min_OnesDigit.toString()}
                     colon = ":"
-                    sec_tens = {this.state.sec_TensDigit.toString()}
-                    sec_ones = {this.state.sec_OnesDigit.toString()}
+                    sec_tens = {this.state.secDigits.toString().slice(-2,1)}
+                    sec_ones = {this.state.secDigits.toString().slice(-1)}
                 />
 
                 <p>  Current Date: {new Date().toDateString()}</p>
@@ -265,3 +280,14 @@ class Timer extends Component {
 }
 
 export default Timer;
+
+
+/*
+    <TimerDisplay 
+        min_tens = {this.state.min_TensDigit.toString()}
+        min_ones = {this.state.min_OnesDigit.toString()}
+        colon = ":"
+        sec_tens = {this.state.sec_TensDigit.toString()}
+        sec_ones = {this.state.sec_OnesDigit.toString()}
+    />
+*/
