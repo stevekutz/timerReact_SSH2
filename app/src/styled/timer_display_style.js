@@ -43,11 +43,40 @@ const DisplayDigitText = styled.div`
     //margin: 4px;
 
 `
+const DisplayDigitControls = styled.div`
+    border: 1px solid blue;
+    
+    width: 60%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 10px;
+    margin: 4px auto;
+
+`
+
+const DisplayDigitControlsSec = styled.div`
+    border: 1px solid blue;
+    
+    display: flex;
+    justify-content: end;
+    width: 8px;
+
+`
+
+const DigitControlButton = styled.button`
+    border: 1px solid red;
+    background: lightblue;
+
+`
 
 export {
     DisplayContainerDiv,
     DisplayDigitContainerDiv,
     DisplayColonDiv,
     DisplayDigitText,
+    DisplayDigitControls,
+    DigitControlButton,
+    
 
 };

@@ -6,6 +6,8 @@ import {
     DisplayDigitContainerDiv,
     DisplayColonDiv,
     DisplayDigitText,
+    DisplayDigitControls,
+    DigitControlButton,
 
 } from '../styled/timer_display_style';
 
@@ -25,6 +27,17 @@ const TimerDisplay = (props) => {
                     
                     </DisplayDigitContainerDiv>
                 
+                    <DisplayDigitControls>
+                        <DigitControlButton> Inc Min </DigitControlButton>
+                        <DigitControlButton> Dec Min </DigitControlButton>
+
+                        <DigitControlButton> Inc Sec </DigitControlButton>
+                        <DigitControlButton> Dec Sec </DigitControlButton>
+                    </DisplayDigitControls>
+
+                    
+
+                    
                 
                 </DisplayContainerDiv>
             
