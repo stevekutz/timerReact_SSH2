@@ -76,7 +76,7 @@ class Timer extends Component {
         }, 1000)
         
         // setup for start/stop timer
-        let intervalID = setInterval(this.countSeconds, 10);
+        let intervalID = setInterval(this.countSeconds, 100);
         this.setState({intervalID: intervalID});
         this.setState({timerActive: false });
         
@@ -106,7 +106,7 @@ class Timer extends Component {
             countMSG = " ODD " + count.toString();
             // console.log(countMSG)
         }
-
+    
     }
 
     componentWillUnmount() {
@@ -175,8 +175,8 @@ class Timer extends Component {
     }
 
     assignDigits() {
-        // let secTotal = this.state.secTotal;
-        // let minTotal = this.state.minTotal;    
+
+        console.log("Assign Digits called");
 
         this.setState({secTotal: this.state.secondsCount - (60 * this.state.minTotal)});
 
@@ -186,7 +186,9 @@ class Timer extends Component {
         } else if (this.state.secTotal > 9 && this.state.secTotal <= 59) {
             this.setState({secDigits: this.state.secTotal.toString()});
 
-        } else if (this.state.secTotal > 59) {
+        } 
+        
+        if (this.state.secTotal > 59) {
             console.log("MIN");
             this.setState({secTotal: 0})
             this.setState({minTotal: this.state.minTotal + 1})
@@ -201,7 +203,7 @@ class Timer extends Component {
             }
         }  
 
-
+        console.log('minDigits ', this.state.minDigits);
         
 
 
@@ -247,13 +249,18 @@ class Timer extends Component {
         // *** for double digit display
         this.setState({secDigits: '00'});
         this.setState({minDigits: '00'});
+        this.setState({secTotal: 0});
+        this.setState({minTotal: 0});
 
     }
 
     incMin = () => {
-        if (this.state.minDigits >= 0 && this.state.minDigits < 59) {
-            this.setState({minDigits: this.state.minDigits + 1})
-        }
+        console.log("incMin FIRED")
+
+        this.setState({ secondsCount: this.state.secondsCount + 60});  
+        this.setState({ minTotal: this.state.minTotal + 1})
+        this.assignDigits();      
+
     }
 
     decMin = () => {

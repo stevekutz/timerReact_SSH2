@@ -28,7 +28,7 @@ const TimerDisplay = (props) => {
                     </DisplayDigitContainerDiv>
                 
                     <DisplayDigitControls>
-                        <DigitControlButton onClick = {() => props.incMin_handler}> Inc Min </DigitControlButton>
+                        <DigitControlButton onClick = {props.incMin_handler}> Inc Min </DigitControlButton>
                         <DigitControlButton> Dec Min </DigitControlButton>
 
                         <DigitControlButton> Inc Sec </DigitControlButton>
