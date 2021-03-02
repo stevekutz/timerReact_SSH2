@@ -37,11 +37,11 @@ class Timer extends Component {
         showTime: false,
         timerActive: 'false',
         buttonText: 'Start',
-        sec_OnesDigit: '0',
-        sec_TensDigit: '0',
-        min_OnesDigit: '0',
-        min_TensDigit: '0',
-
+        sec_OnesDigit: 0,
+        sec_TensDigit: 0,
+        min_OnesDigit: 0,
+        min_TensDigit: 0,
+        fullTime: false,
 
 
     }
@@ -70,7 +70,7 @@ class Timer extends Component {
         }, 1000)
         
         // setup for start/stop timer
-        let intervalID = setInterval(this.countSeconds, 1000);
+        let intervalID = setInterval(this.countSeconds, 1);
         this.setState({intervalID: intervalID});
         this.setState({timerActive: false });
         
@@ -152,20 +152,14 @@ class Timer extends Component {
             this.setState({buttonText: 'Stop'})
             
         }
-        
-        // this.countSeconds();    
+
     }
 
 
     countSeconds = () => {
 
         if(this.state.timerActive) {
-
-            // let intervalID = setInterval(this.countSeconds, 1000);
-            // this.setState({intervalID: intervalID});
-
-            this.setState({secondsCount: this.state.secondsCount + 1})    
-            
+            this.setState({secondsCount: this.state.secondsCount + 1})                
             this.assignDigits();
 
         } else {
@@ -175,18 +169,32 @@ class Timer extends Component {
     }
 
     assignDigits() {
-        // console.log("Assign Called");
 
         let secondsCount = this.state.secondsCount;
 
-
-
         // assign sec_Ones
-        this.setState({sec_OnesDigit: secondsCount.toString().slice(-1)})
+        this.setState({sec_OnesDigit: this.state.secondsCount.toString().slice(-1)})
 
         // assign_sec_Tens
-        if (secondsCount > 9 && secondsCount <= 59) {
-            this.setState({sec_TensDigit: secondsCount.toString().slice(-2,1)})
+        if(this.state.secondsCount % 10 === 0) {
+
+                if (this.state.sec_TensDigit >= 0 && this.state.sec_TensDigit < 5) {
+                    this.setState({ sec_TensDigit: this.state.sec_TensDigit + 1 })    
+                    // this.setState({sec_TensDigit: this.})
+                } else {
+                    this.setState({ sec_TensDigit: 0 })
+                    
+
+                    if(this.state.min_OnesDigit >= 0 && this.state.min_OnesDigit < 9) {    
+                        this.setState({ min_OnesDigit: this.state.min_OnesDigit + 1 })
+                    } else if (this.state.min_TensDigit < 5) {
+                        this.setState({ min_OnesDigit: 0})
+                        this.setState({ min_TensDigit: this.state.min_TensDigit + 1 })
+                    } else if (this.state.min_TensDigit >= 5) {
+                        console.log(" over an hour !!!!! ")
+                        this.setState({fullTime: true})
+                    }
+                } 
         }
 
     }
@@ -199,7 +207,7 @@ class Timer extends Component {
 
     resetDisplayTimer = () => {
         this.setState({sec_OnesDigit: 0 });
-        this.setState({set_TensDigit: 0 });
+        this.setState({sec_TensDigit: 0 });
         this.setState({min_OnesDigit: 0 });
         this.setState({min_TensDigit: 0 });
     
