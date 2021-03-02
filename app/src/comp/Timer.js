@@ -250,6 +250,17 @@ class Timer extends Component {
 
     }
 
+    incMin = () => {
+        if (this.state.minDigits >= 0 && this.state.minDigits < 59) {
+            this.setState({minDigits: this.state.minDigits + 1})
+        }
+    }
+
+    decMin = () => {
+        if (this.state.minDigits > 0 && this.state.minDigits <= 59) {
+            this.setState({minDigits: this.state.minDigits - 1})
+        }
+    }
 
 
     render() {
