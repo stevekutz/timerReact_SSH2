@@ -76,7 +76,7 @@ class Timer extends Component {
         }, 1000)
         
         // setup for start/stop timer
-        let intervalID = setInterval(this.countSeconds, 100);
+        let intervalID = setInterval(this.countSeconds, 10);
         this.setState({intervalID: intervalID});
         this.setState({timerActive: false });
         
@@ -188,7 +188,7 @@ class Timer extends Component {
 
         } 
         
-        if (this.state.secTotal > 59) {
+        if (this.state.secTotal >= 59) {
             console.log("MIN");
             this.setState({secTotal: 0})
             this.setState({minTotal: this.state.minTotal + 1})
@@ -258,7 +258,7 @@ class Timer extends Component {
         console.log("incMin FIRED")
 
         this.setState({ secondsCount: this.state.secondsCount + 60});  
-        this.setState({ minTotal: this.state.minTotal + 1})
+        this.setState({ minTotal: this.state.minTotal + 1});
         this.assignDigits();      
 
     }
