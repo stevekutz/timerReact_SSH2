@@ -45,6 +45,8 @@ class Timer extends Component {
 
         secDigits: '00',
         minDigits: '00',
+        secTotal: 0,
+        minTotal: 0,
 
     }
     // ****************************************************
@@ -64,7 +66,9 @@ class Timer extends Component {
         //     'side-effects' are set up here
         //     a bit similar to how useEffect is used with Hooks
         console.log("CDM fired")
-        
+        // this.setState({secTotal: this.state.secondsCount - (60 * this.state.minTotal)});
+
+
 
         // setup for Date with seconds counter
         setInterval(() => {
@@ -72,7 +76,7 @@ class Timer extends Component {
         }, 1000)
         
         // setup for start/stop timer
-        let intervalID = setInterval(this.countSeconds, 100);
+        let intervalID = setInterval(this.countSeconds, 10);
         this.setState({intervalID: intervalID});
         this.setState({timerActive: false });
         
@@ -171,18 +175,31 @@ class Timer extends Component {
     }
 
     assignDigits() {
+        // let secTotal = this.state.secTotal;
+        // let minTotal = this.state.minTotal;    
 
-        let justSecDigits;
-        let justMinDigits;
+        this.setState({secTotal: this.state.secondsCount - (60 * this.state.minTotal)});
 
-
-
-        if(this.state.secondsCount >= 0 && this.state.secondsCount <= 9) {
-            this.setState({secDigits: '0' + this.state.secondsCount.toString()});
+        if( this.state.secTotal >= 0 && this.state.secTotal <= 9) {
+            this.setState({secDigits: '0' + this.state.secTotal.toString()});
         
-        } else if (this.state.secondsCount > 9 && this.state.secondsCount <= 59) {
-            this.setState({secDigits: this.state.secondsCount});
-        };   
+        } else if (this.state.secTotal > 9 && this.state.secTotal <= 59) {
+            this.setState({secDigits: this.state.secTotal.toString()});
+
+        } else if (this.state.secTotal > 59) {
+            console.log("MIN");
+            this.setState({secTotal: 0})
+            this.setState({minTotal: this.state.minTotal + 1})
+            
+            if(this.state.minTotal <= 9) {
+                this.setState({minDigits: '0' + this.state.minTotal.toString()})
+            } else if (this.state.minTotal <= 59) {
+                this.setState({minDigits: this.state.minTotal.toString()})
+                this.setState({secTotal: 0})    
+            } else {
+                console.log(" Hour Reached ")
+            }
+        }  
 
 
         
@@ -229,6 +246,7 @@ class Timer extends Component {
     }
 
 
+
     render() {
         let intType;  
 
@@ -245,8 +263,8 @@ class Timer extends Component {
             <Timer_div>
 
                 <TimerDisplay 
-                    min_tens = {this.state.min_TensDigit.toString()}
-                    min_ones = {this.state.min_OnesDigit.toString()}
+                    min_tens = {this.state.minDigits.toString().slice(-2,1)}
+                    min_ones = {this.state.minDigits.toString().slice(-1)}
                     colon = ":"
                     sec_tens = {this.state.secDigits.toString().slice(-2,1)}
                     sec_ones = {this.state.secDigits.toString().slice(-1)}
