@@ -262,6 +262,17 @@ class Timer extends Component {
         }
     }
 
+    incSec = () => {
+        if (this.state.secDigits >= 0 && this.state.secDigits < 59) {
+            this.setState({secDigits: this.state.secDigits + 1})
+        }
+    }
+
+    decSec = () => {
+        if (this.state.secDigits > 0 && this.state.secDigits <= 59) {
+            this.setState({secDigits: this.state.secDigits - 1})
+        }
+    }
 
     render() {
         let intType;  
