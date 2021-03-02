@@ -238,11 +238,16 @@ class Timer extends Component {
     }
 
     resetDisplayTimer = () => {
-        this.setState({sec_OnesDigit: 0 });
-        this.setState({sec_TensDigit: 0 });
-        this.setState({min_OnesDigit: 0 });
-        this.setState({min_TensDigit: 0 });
-    
+        // *** for single digit display
+        // this.setState({sec_OnesDigit: 0 });
+        // this.setState({sec_TensDigit: 0 });
+        // this.setState({min_OnesDigit: 0 });
+        // this.setState({min_TensDigit: 0 });
+
+        // *** for double digit display
+        this.setState({secDigits: '00'});
+        this.setState({minDigits: '00'});
+
     }
 
 
